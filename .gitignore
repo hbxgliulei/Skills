@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Temp
+*.tmp
+*.temp
+
+# IDE
+.vscode/
+.idea/
