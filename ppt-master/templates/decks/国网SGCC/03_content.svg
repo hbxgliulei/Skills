@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <!-- 03_content.svg · SGCC 内容页 · 严格按原 PPTX slide4 坐标重建 -->
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+
+  <!-- 顶部标题装饰组 (原 组合10 pos=37,37 size=941x68) -->
+  <!-- 多边形装饰 (原 任意多边形45 pos=27,28 size=42x42 → 实际 64,65) -->
+  <polygon points="64,65 96,65 106,86 96,107 64,107 54,86" fill="#2B9574"/>
+  <!-- 小矩形 (原 矩形46 pos=49,52 size=26x26 → 实际 86,89) -->
+  <rect x="86" y="89" width="26" height="26" fill="#00706B"/>
+  <!-- 水平线 (原 直接连接符47 pos=83,75 size=650x2 → 实际 120,112) -->
+  <line x1="120" y1="112" x2="770" y2="112" stroke="#2B9574" stroke-width="2"/>
+
+  <!-- 页面标题 (原 pos=122,33 size=447x60) -->
+  <text x="122" y="75" font-family="&quot;方正细黑&quot;, &quot;FZXiHei&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="28" font-weight="700" fill="#333333">{{PAGE_TITLE}}</text>
+
+  <!-- 右上角装饰 (原 组合49 pos=993,60 size=212x78) -->
+  <rect x="993" y="60" width="212" height="78" fill="none" stroke="#00706B" stroke-width="1" stroke-opacity="0.3"/>
+  <circle cx="1050" cy="99" r="30" fill="#2B9574" fill-opacity="0.12"/>
+  <circle cx="1050" cy="99" r="15" fill="#2B9574" fill-opacity="0.3"/>
+  <line x1="1100" y1="80" x2="1180" y2="80" stroke="#00706B" stroke-width="1" stroke-opacity="0.4"/>
+  <line x1="1100" y1="100" x2="1180" y2="100" stroke="#00706B" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="1100" y1="120" x2="1180" y2="120" stroke="#00706B" stroke-width="1" stroke-opacity="0.2"/>
+
+  <!-- 内容小标题 (原 pos=17,105 size=613x179) -->
+  <text x="17" y="160" font-family="&quot;方正细黑&quot;, &quot;FZXiHei&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="22" font-weight="600" fill="#00706B">{{CONTENT_HEADING}}</text>
+  <line x1="17" y1="175" x2="80" y2="175" stroke="#2B9574" stroke-width="3"/>
+
+  <!-- 左侧正文区 (原 pos=17,304 size=594x397) -->
+  <text x="17" y="340" font-family="&quot;Microsoft YaHei&quot;, &quot;PingFang SC&quot;, sans-serif" font-size="16" font-weight="400" fill="#666666">
+    <tspan x="17" dy="0">{{CONTENT_BODY_LINE_1}}</tspan>
+    <tspan x="17" dy="28">{{CONTENT_BODY_LINE_2}}</tspan>
+    <tspan x="17" dy="28">{{CONTENT_BODY_LINE_3}}</tspan>
+    <tspan x="17" dy="28">{{CONTENT_BODY_LINE_4}}</tspan>
+  </text>
+
+  <!-- 右侧内容区 (原图表/图片区 pos≈620,130) -->
+  <rect x="620" y="130" width="640" height="260" fill="#F7FAF9" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="640" y="160" font-family="&quot;方正细黑&quot;, &quot;FZXiHei&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="18" font-weight="600" fill="#00706B">{{CHART_TITLE}}</text>
+  <text x="640" y="270" font-family="&quot;Microsoft YaHei&quot;, sans-serif" font-size="14" font-weight="400" fill="#999999">{{CHART_PLACEHOLDER}}</text>
+
+  <!-- 下方内容区 -->
+  <rect x="620" y="410" width="640" height="280" fill="#F7FAF9" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="640" y="440" font-family="&quot;方正细黑&quot;, &quot;FZXiHei&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="18" font-weight="600" fill="#00706B">{{DATA_TITLE}}</text>
+  <text x="640" y="550" font-family="&quot;Microsoft YaHei&quot;, sans-serif" font-size="14" font-weight="400" fill="#999999">{{DATA_PLACEHOLDER}}</text>
+
+  <!-- 左侧下方正文区 -->
+  <text x="17" y="500" font-family="&quot;Microsoft YaHei&quot;, &quot;PingFang SC&quot;, sans-serif" font-size="16" font-weight="400" fill="#666666">
+    <tspan x="17" dy="0">{{CONTENT_BODY_LINE_5}}</tspan>
+    <tspan x="17" dy="28">{{CONTENT_BODY_LINE_6}}</tspan>
+  </text>
+
+  <!-- 页码 -->
+  <text x="1230" y="710" font-family="&quot;Franklin Gothic Medium&quot;, Arial, sans-serif" font-size="14" font-weight="500" fill="#999999" text-anchor="end">{{PAGE_NUMBER}}</text>
+</svg>

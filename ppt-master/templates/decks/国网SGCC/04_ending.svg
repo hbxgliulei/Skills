@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <!-- 04_ending.svg · SGCC 封底 · 严格按原 PPTX slide28 坐标重建 -->
+  <!-- 全幅背景图 (原图 image47.jpeg, 1024x683) -->
+  <image href="ending_bg.jpeg" x="-1" y="0" width="1281" height="727" preserveAspectRatio="xMidYMid slice"/>
+
+  <!-- 半透明遮罩 -->
+  <rect x="0" y="188" width="1281" height="277" fill="#000000" fill-opacity="0.5"/>
+
+  <!-- SGCC Logo 右上角 (原 pos=950,26 size=284x92) -->
+  <image href="logo_ending.png" x="950" y="26" width="284" height="92" preserveAspectRatio="xMidYMid meet"/>
+
+  <!-- 致谢文字 (原 pos=106,269 size=1041x113) -->
+  <text x="640" y="330" font-family="&quot;方正细黑&quot;, &quot;FZXiHei&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="48" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="6">{{THANK_YOU}}</text>
+
+  <!-- 装饰线 -->
+  <line x1="540" y1="360" x2="740" y2="360" stroke="#2B9574" stroke-width="3"/>
+
+  <!-- 联系信息 -->
+  <text x="640" y="410" font-family="&quot;Microsoft YaHei&quot;, sans-serif" font-size="20" font-weight="400" fill="#ACE7D4" text-anchor="middle" letter-spacing="2">{{CONTACT_INFO}}</text>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <!-- 01_cover.svg · SGCC 封面 · 严格按原 PPTX slide1 坐标重建 -->
+  <!-- 全幅背景图 (原图 image4.png, 4396x2198) -->
+  <image href="cover_bg.png" x="0" y="0" width="1280" height="720" preserveAspectRatio="xMidYMid slice"/>
+
+  <!-- SGCC Logo 左上角 (原 pos=37,26 size=284x92) -->
+  <image href="logo_single.png" x="37" y="26" width="284" height="92" preserveAspectRatio="xMidYMid meet"/>
+
+  <!-- 主标题 (原 pos=79,149 size=1173x192) -->
+  <text x="79" y="230" font-family="&quot;方正细黑&quot;, &quot;FZXiHei&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="48" font-weight="700" fill="#FFFFFF" letter-spacing="2">{{TITLE}}</text>
+
+  <!-- 副标题 (原 pos=213,402 size=854x180) -->
+  <text x="213" y="450" font-family="&quot;Microsoft YaHei&quot;, &quot;PingFang SC&quot;, sans-serif" font-size="28" font-weight="400" fill="#ACE7D4" letter-spacing="1">{{SUBTITLE}}</text>
+
+  <!-- 日期/单位 (副标题下方) -->
+  <text x="213" y="510" font-family="&quot;Microsoft YaHei&quot;, sans-serif" font-size="20" font-weight="400" fill="#FFFFFF" fill-opacity="0.7">{{DATE}}</text>
+</svg>

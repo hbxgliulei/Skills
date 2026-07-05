@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <!-- 02_toc.svg · SGCC 目录 · 严格按原 PPTX slide2 坐标重建 -->
+  <rect width="1280" height="720" fill="#FFFFFF"/>
+
+  <!-- 左侧装饰面板 (原 组合5 pos=-3,0 size=378x720) -->
+  <rect x="-3" y="0" width="378" height="720" fill="#2B9574"/>
+  <rect x="-3" y="0" width="378" height="720" fill="#00706B" fill-opacity="0.15"/>
+
+  <!-- 左侧装饰圆环 (原 pos=259,67 size=238x238) -->
+  <circle cx="378" cy="186" r="119" fill="#FFFFFF" stroke="#00706B" stroke-width="3"/>
+  <image href="toc_circle.png" x="272" y="80" width="212" height="212" preserveAspectRatio="xMidYMid meet"/>
+
+  <!-- "目录" 标题 (原 pos=537,102) -->
+  <text x="537" y="170" font-family="&quot;方正细黑&quot;, &quot;FZXiHei&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="48" font-weight="700" fill="#2B9574">目录</text>
+
+  <!-- "CONTENTS" 英文 (原 pos=735,137) -->
+  <text x="735" y="170" font-family="&quot;Franklin Gothic Medium&quot;, Arial, sans-serif" font-size="24" font-weight="500" fill="#00706B" letter-spacing="4">CONTENTS</text>
+
+  <!-- 水平分隔线 (原 pos=562,216 size=665x6) -->
+  <rect x="562" y="216" width="665" height="3" fill="#2B9574"/>
+
+  <!-- 4 章节条目 (原 pos=580,265/365/465/565 each 573x83) -->
+  <!-- 条目 01 -->
+  <rect x="580" y="265" width="573" height="83" fill="#F7FAF9"/>
+  <rect x="580" y="265" width="8" height="83" fill="#2B9574"/>
+  <text x="610" y="305" font-family="&quot;Franklin Gothic Medium&quot;, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B9574">01</text>
+  <text x="670" y="305" font-family="&quot;方正细黑&quot;, &quot;FZXiHei&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="22" font-weight="600" fill="#333333">{{CHAPTER_01}}</text>
+  <text x="670" y="330" font-family="&quot;Microsoft YaHei&quot;, sans-serif" font-size="14" font-weight="400" fill="#999999">{{CHAPTER_01_EN}}</text>
+
+  <!-- 条目 02 -->
+  <rect x="580" y="365" width="573" height="83" fill="#F7FAF9"/>
+  <rect x="580" y="365" width="8" height="83" fill="#00706B"/>
+  <text x="610" y="405" font-family="&quot;Franklin Gothic Medium&quot;, Arial, sans-serif" font-size="28" font-weight="700" fill="#00706B">02</text>
+  <text x="670" y="405" font-family="&quot;方正细黑&quot;, &quot;FZXiHei&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="22" font-weight="600" fill="#333333">{{CHAPTER_02}}</text>
+  <text x="670" y="430" font-family="&quot;Microsoft YaHei&quot;, sans-serif" font-size="14" font-weight="400" fill="#999999">{{CHAPTER_02_EN}}</text>
+
+  <!-- 条目 03 -->
+  <rect x="580" y="465" width="573" height="83" fill="#F7FAF9"/>
+  <rect x="580" y="465" width="8" height="83" fill="#187A79"/>
+  <text x="610" y="505" font-family="&quot;Franklin Gothic Medium&quot;, Arial, sans-serif" font-size="28" font-weight="700" fill="#187A79">03</text>
+  <text x="670" y="505" font-family="&quot;方正细黑&quot;, &quot;FZXiHei&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="22" font-weight="600" fill="#333333">{{CHAPTER_03}}</text>
+  <text x="670" y="530" font-family="&quot;Microsoft YaHei&quot;, sans-serif" font-size="14" font-weight="400" fill="#999999">{{CHAPTER_03_EN}}</text>
+
+  <!-- 条目 04 -->
+  <rect x="580" y="565" width="573" height="83" fill="#F7FAF9"/>
+  <rect x="580" y="565" width="8" height="83" fill="#009882"/>
+  <text x="610" y="605" font-family="&quot;Franklin Gothic Medium&quot;, Arial, sans-serif" font-size="28" font-weight="700" fill="#009882">04</text>
+  <text x="670" y="605" font-family="&quot;方正细黑&quot;, &quot;FZXiHei&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-size="22" font-weight="600" fill="#333333">{{CHAPTER_04}}</text>
+  <text x="670" y="630" font-family="&quot;Microsoft YaHei&quot;, sans-serif" font-size="14" font-weight="400" fill="#999999">{{CHAPTER_04_EN}}</text>
+</svg>

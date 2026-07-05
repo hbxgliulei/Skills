@@ -1,0 +1,6 @@
+# ppt-master skill - temporary files
+*/__pycache__/
+*.pyc
+.DS_Store
+_user_meta.json
+*.log
