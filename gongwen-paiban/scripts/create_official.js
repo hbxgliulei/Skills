@@ -50,13 +50,13 @@ const FORMAT = {
       alignment: AlignmentType.CENTER,
     },
     SUBTITLE: {
-      font: '方正仿宋_GBK',
+      font: '方正楷体_GBK',
       size: 32,      // 三号 (16pt)
       bold: true,
       alignment: AlignmentType.CENTER,
     },
     ORG: {
-      font: '楷体',
+      font: '方正楷体_GBK',
       size: 32,
       bold: true,
       alignment: AlignmentType.CENTER,
