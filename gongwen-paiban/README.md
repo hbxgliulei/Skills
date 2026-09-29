@@ -6,6 +6,7 @@ WorkBuddy 技能包，按行文基本格式标准对 Word 文档进行格式化�
 
 - **Reformat 模式**：已有 docx 文件 → 自动识别标题层级 → 按标准重排
 - **Create 模式**：从 Markdown/文本 → 直接生成符合标准的公文
+- **中文引号规范化**：自动将英文双引号转换为中文引号“ ”（Create 模式内置；已有 docx 可用 `scripts/convert_quotes.py` 独立处理）
 
 ## 排版标准
 
@@ -31,7 +32,8 @@ WorkBuddy 技能包，按行文基本格式标准对 Word 文档进行格式化�
 ~/.workbuddy/skills/gongwen-paiban/
 ├── SKILL.md
 ├── scripts/
-│   └── create_official.js
+│   ├── create_official.js
+│   └── convert_quotes.py
 └── references/
     └── gb9704-spec.md
 ```
@@ -57,7 +59,7 @@ Reformat 模式依赖 WorkBuddy 内置的 `docx` skill（提供 unpack/pack 工�
 /gongwen-paiban @"中国碳市场发展历程.docx"
 ```
 
-触发词：公文排版、公文格式化、按标准排版、行文格式
+触发词：公文排版、公文格式化、按标准排版、行文格式、中文引号、引号替换
 
 ## 字体说明
 

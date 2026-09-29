@@ -105,6 +105,24 @@ const FORMAT = {
 // 辅助函数
 // ═══════════════════════════════════════════
 
+// ═══════════════════════════════════════════
+// 中文引号规范化
+// ═══════════════════════════════════════════
+
+/**
+ * smartQuotes — 将文本中的成对英文双引号（"）转换为中文引号
+ *
+ * 规则：按出现顺序交替配对——第 1、3、5…个替换为 "（U+201C 左引号），
+ * 第 2、4、6…个替换为 "（U+201D 右引号）。前提是原文引号成对且
+ * 左先右后（正常文本均满足）。英文单引号不做处理，避免与撇号
+ * （如 90's）混淆。已在 makeParagraph 中自动应用，Create 模式
+ * 生成的所有段落文本均经过此转换，无需预先手工替换。
+ */
+function smartQuotes(text) {
+  let i = 0;
+  return text.replace(/"/g, () => (i++ % 2 === 0 ? '\u201c' : '\u201d'));
+}
+
 /**
  * 创建带标准样式的一段文本
  */
@@ -116,7 +134,7 @@ function makeParagraph(text, style, extraProps = {}) {
     ...extraProps,
     children: [
       new TextRun({
-        text,
+        text: smartQuotes(text),
         font: style.font,
         size: style.size,
         bold: style.bold || false,
