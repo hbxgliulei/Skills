@@ -7,7 +7,8 @@
 | 技能 | 说明 |
 |------|------|
 | [book-character-network](book-character-network/) | 书籍人物关系网络分析与可视化（人物识别、共现分析、关系网络图） |
-| [gongwen-paiban](gongwen-paiban/) | 公文自动排版（方正小标宋/仿宋/黑体/楷体，符合行文格式标准） |
+| [gongwen-paiban](gongwen-paiban/) | 公文自动排版（方正小标宋/仿宋/黑体/楷体，符合行文格式标准），并自动将英文双引号规范为中文引号（Create 模式内置 smartQuotes；已有 docx 用 scripts/convert_quotes.py） |
+| [life-decision-guide](life-decision-guide/) | 人生决策问答：内置《高性价比人生指南》全书 34 节 630 条建议（离线检索脚本），按成本/收益/证据等级 A/B/C 排序回答"该不该做、值不值、怎么选、犯不犯法"，每条注明出处 |
 | [ppt-master](ppt-master/) | 源文档（PDF/DOCX/URL/Markdown）转多格式 SVG 内容演示系统 |
 | [rmrb-fetch](rmrb-fetch/) | 人民日报数字报抓取：单日/批量/断点续传/词频统计 |
 
