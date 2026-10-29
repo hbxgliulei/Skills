@@ -42,6 +42,7 @@ description: 公文自动排版。按行文基本格式标准对 Word 文档进�
 | 二级标题  | 方正楷体_GBK  | 三号 16pt | 32  | 是   | 28pt 固定 | 2 字符 | 左对齐  | — |
 | 三级标题  | 方正仿宋_GBK  | 三号 16pt | 32  | 否   | 28pt 固定 | 2 字符 | 左对齐  | — |
 | 正文    | 方正仿宋_GBK  | 三号 16pt | 32  | 否   | 28pt 固定 | 2 字符 | 两端对齐 | — |
+| 段首小标题 | 方正楷体_GBK  | 三号 16pt | 32  | 是   | 28pt 固定 | 2 字符 | 两端对齐 | “一是×××。”与正文同段，仅前半加粗 |
 | 页码    | 宋体        | 四号 14pt | 28  | —   | —       | —    | 居中   | — |
 
 页面设置：A4（210mm × 297mm），上 3.7cm / 下 3.5cm / 左 2.8cm / 右 2.6cm。
@@ -99,7 +100,7 @@ createOfficialDoc({
 - 运行脚本时必须注入模块搜索路径：
   `NODE_PATH="~/.workbuddy/binaries/node/workspace/node_modules"`
 
-> 说明：`create_official.js` 仅支持单字体 run，无法处理"段首小标题加粗 + 正文常规"同段混排（如"一是×××。正文……"）。此类结构需自行用 `docx` 包的 Paragraph/TextRun 手写脚本，参见"混排段落模板"。
+> 说明：`create_official.js` 已**原生支持**“段首小标题加粗 + 正文常规”的同段混排（如“一是×××。正文……”）。四种写法见下方[混排段落（段首小标题加粗）](#混排段落段首小标题加粗)一节，无需手写 TextRun；仅当需要同段三段以上不同字体/字号时才需自行构建 Paragraph。
 
 ---
 
@@ -213,9 +214,52 @@ print('pgSz 11906:', 'w:w="11906"' in xml, '| pgMar:', '<w:pgMar' in xml)
 </w:p>
 ```
 
-### 混排段落模板（段首小标题加粗 + 正文常规）
+### 混排段落（段首小标题加粗）
 
-"一是××××，××××。正文……" 这类段首小标题与正文同段的写法，`create_official.js` 无法生成，须手写：
+公文常见的“一是××××。正文……”写法：段首小标题用**楷体加粗**（与二级标题风格一致），其后正文仍为仿宋常规。`create_official.js` 已原生支持，四种写法任选其一：
+
+**① 显式 `lead` 字段（最精确，推荐）**
+
+```js
+{ lead: '一是经营指标完成不均衡。', text: '收入完成率78.67%，低于序时进度……', level: 'body' }
+```
+
+**② 专用 `level: 'lead'`（自动拆分）**
+
+```js
+{ text: '二是加大回款催收，防范财务风险。清凉教室运维费方面……', level: 'lead' }
+```
+
+脚本按 `^((?:[一二三四五六七八九十]+是)[^。！？]*[。！？])` 自动截取段首小标题加粗；未命中则该段按普通正文排。
+
+**③ 单段开关 `autoLead: true`**
+
+```js
+{ text: '三是强化成本管控，规范预算执行。按省综要求完成附表2-1填报……', level: 'body', autoLead: true }
+```
+
+**④ 全局开关**（对该文档所有 body 段落生效）
+
+```js
+createOfficialDoc({ title: '…', sections: [...], outputPath: '…', autoLead: true });
+```
+
+**匹配规则与边界**
+
+- 只匹配**段首**的“一到十是”，截断到第一个句号/感叹号/问号为止。
+- `2027年主要增长点：一是罗田储能。二是公安追补。` 这类**段中并列**不会被误加粗（正则以 `^` 锚定段首）。
+- “一是×××；二是×××。”若出现在段首，只加粗到第一个句号处；需逐字精确控制时改用写法①。
+
+**底层实现**：`makeLeadParagraph(leadText, bodyText)` 生成两个 TextRun——`FORMAT.FONTS.LEAD`（方正楷体_GBK / 三号 / 加粗）+ `FORMAT.FONTS.BODY`（方正仿宋_GBK / 三号 / 不加粗）。也可在自定义脚本中直接调用：
+
+```js
+const { makeLeadParagraph, splitLead } = require('./scripts/create_official');
+// splitLead('一是×××。正文…')  →  ['一是×××。', '正文…']；未匹配返回 null
+```
+
+**降级：手写更复杂的混排**
+
+同段需要三段以上不同字体/字号，或需斜体、上下标等时，才需自行构建：
 
 ```js
 new Paragraph({
@@ -229,7 +273,18 @@ new Paragraph({
 })
 ```
 
-> 中文字体必须用对象形式显式指定 `eastAsia`；只写 `font: '方正仿宋_GBK'`（字符串）不会写入 `w:eastAsia`，WPS/Word 会回退默认字体。
+> **校验提示（易踩坑）**：docx 包对 `bold: false` 会写出 `<w:b w:val="false"/>`。用 `<w:b` 做子串判断会把**非加粗** run 误判为加粗，须排除 `w:val="false"/"0"/"off"`：
+> ```python
+> bold = bool(re.search(r'<w:b(?:\s+w:val="(?:true|1|on)")?\s*/>', run)) \
+>        and not re.search(r'<w:b\s+w:val="(?:false|0|off)"', run)
+> ```
+
+
+> **中文字体**：docx npm 包 **9.7.1** 实测——字符串形式 `font: '方正仿宋_GBK'` 也会自动写入 `w:eastAsia`（同时写入 ascii/hAnsi/cs 四个属性），`create_official.js` 的写法有效。
+> 早期版本（含部分 7.x）确实只写 ascii 而不写 eastAsia，会导致 WPS/Word 回退默认字体。
+> 因此：用 9.x 可直接写字符串；若环境为旧版本或需严格兼容，**仍应改用对象形式**
+> `font: { ascii: '方正仿宋_GBK', eastAsia: '方正仿宋_GBK', hAnsi: '方正仿宋_GBK', cs: '方正仿宋_GBK' }`。
+> 验证方法：生成后检查 document.xml 中是否出现 `w:eastAsia="方正仿宋_GBK"`，不要只看 `w:ascii`。
 
 ### 标题段落模板
 

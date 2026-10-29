@@ -94,6 +94,14 @@ const FORMAT = {
       alignment: AlignmentType.JUSTIFIED,
       indent: 640,   // 首行缩进 2 字符
     },
+    // 段首小标题（"一是×××。"）：楷体加粗，与二级标题风格一致
+    LEAD: {
+      font: '方正楷体_GBK',
+      size: 32,      // 三号 (16pt)
+      bold: true,
+      alignment: AlignmentType.JUSTIFIED,
+      indent: 640,
+    },
     PAGE_NUM: {
       font: '宋体',
       size: 28,      // 四号 (14pt)
@@ -143,14 +151,94 @@ function makeParagraph(text, style, extraProps = {}) {
   });
 }
 
+// ═══════════════════════════════════════════
+// 混排段落（段首小标题加粗 + 正文常规）
+// ═══════════════════════════════════════════
+
+/** 段首序号小标题：一是×××。 / 二是×××，×××。 / …… / 十是×××。 */
+const LEAD_PATTERN = /^((?:[一二三四五六七八九十]+是)[^。！？]*[。！？])/;
+
 /**
- * 根据层级标记创建对应样式的段落
- * @param {{ text: string, level: string | number }} item
+ * 拆分「段首序号小标题」与「余下正文」
+ * @param {string} text
+ * @returns {[string, string] | null} [小标题, 正文]；未匹配返回 null
+ */
+function splitLead(text) {
+  const s = String(text || '');
+  const m = s.match(LEAD_PATTERN);
+  if (!m) return null;
+  return [m[1], s.slice(m[1].length)];
+}
+
+/**
+ * 创建混排段落：前半（段首小标题）楷体加粗，后半（正文）仿宋常规
+ * @param {string} leadText — 需加粗的段首部分，可传空串
+ * @param {string} bodyText — 其后正文
+ * @param {Object} [extraProps] — 追加到 Paragraph 的属性
  * @returns {Paragraph}
  */
-function makeLeveledParagraph(item) {
+function makeLeadParagraph(leadText, bodyText, extraProps = {}) {
+  const runs = [];
+  if (leadText) {
+    runs.push(new TextRun({
+      text: smartQuotes(leadText),
+      font: FORMAT.FONTS.LEAD.font,
+      size: FORMAT.FONTS.LEAD.size,
+      bold: true,
+    }));
+  }
+  if (bodyText) {
+    runs.push(new TextRun({
+      text: smartQuotes(bodyText),
+      font: FORMAT.FONTS.BODY.font,
+      size: FORMAT.FONTS.BODY.size,
+      bold: false,
+    }));
+  }
+  return new Paragraph({
+    alignment: FORMAT.FONTS.LEAD.alignment,
+    spacing: FORMAT.LINE_SPACING,
+    indent: { firstLine: FORMAT.FONTS.LEAD.indent },
+    ...extraProps,
+    children: runs.length ? runs : [new TextRun({
+      text: '',
+      font: FORMAT.FONTS.BODY.font,
+      size: FORMAT.FONTS.BODY.size,
+    })],
+  });
+}
+
+/**
+ * 根据层级标记创建对应样式的段落
+ *
+ * 混排支持（四种写法，优先级从高到低）：
+ *   1. 显式拆分：{ lead: '一是×××。', text: '正文……', level: 'body' }
+ *   2. 专用层级：{ text: '一是×××。正文……', level: 'lead' }
+ *      —— 自动按「一到十是……。」拆分，未命中则整段按正文排
+ *   3. 局部开关：{ text: '一是×××。正文……', level: 'body', autoLead: true }
+ *   4. 全局开关：createOfficialDoc({ ..., autoLead: true })
+ *      —— 所有 body 段落自动识别段首序号并加粗
+ *
+ * @param {{ text: string, level?: string | number, lead?: string, autoLead?: boolean }} item
+ * @param {{ autoLead?: boolean }} [opts]
+ * @returns {Paragraph}
+ */
+function makeLeveledParagraph(item, opts = {}) {
   const text = item.text;
   const level = String(item.level || 'body');
+
+  // ── 混排段落 ──
+  if (item.lead) {
+    return makeLeadParagraph(item.lead, text || '');
+  }
+  if (level === 'lead') {
+    const parts = splitLead(text);
+    return parts ? makeLeadParagraph(parts[0], parts[1]) : makeLeadParagraph('', text || '');
+  }
+  if (item.autoLead || (opts.autoLead && level === 'body')) {
+    const parts = splitLead(text);
+    if (parts) return makeLeadParagraph(parts[0], parts[1]);
+  }
 
   switch (level) {
     case 'title':
@@ -193,8 +281,9 @@ function makeLeveledParagraph(item) {
  *    { text: '正文段落...', level: 'body' }]
  * @param {string} options.outputPath  — 输出文件路径
  * @param {boolean} [options.showPageNum=true] — 是否显示页码
+ * @param {boolean} [options.autoLead=false] — 是否自动为所有 body 段落识别段首序号小标题并加粗
  */
-async function createOfficialDoc({ title, subtitle, org, sections, outputPath, showPageNum = true }) {
+async function createOfficialDoc({ title, subtitle, org, sections, outputPath, showPageNum = true, autoLead = false }) {
   const children = [];
 
   const allSections = [];
@@ -208,7 +297,7 @@ async function createOfficialDoc({ title, subtitle, org, sections, outputPath, s
   allSections.push(...sections);
 
   for (const item of allSections) {
-    children.push(makeLeveledParagraph(item));
+    children.push(makeLeveledParagraph(item, { autoLead }));
   }
 
   const doc = new Document({
@@ -310,4 +399,11 @@ if (require.main === module) {
 // 导出
 // ═══════════════════════════════════════════
 
-module.exports = { createOfficialDoc, FORMAT, makeParagraph, makeLeveledParagraph };
+module.exports = {
+  createOfficialDoc,
+  FORMAT,
+  makeParagraph,
+  makeLeveledParagraph,
+  makeLeadParagraph,
+  splitLead,
+};
